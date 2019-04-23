@@ -33,9 +33,10 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf" />
 		</Linker>
 		<Unit filename="console.hpp" />
+		<Unit filename="console_sdl.hpp" />
 		<Unit filename="level1.txt" />
 		<Unit filename="main.cpp" />
 		<Unit filename="var.hpp" />

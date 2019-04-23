@@ -1,7 +1,0 @@
-# depslib dependency file v1.0
-1553529875 source:c:\users\admin\desktop\tailieu\dong\pikachu\main.cpp
-	<iostream>
-	<fstream>
-	<vector>
-	<bits/stdc++.h>
-

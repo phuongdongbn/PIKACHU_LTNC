@@ -1,7 +1,5 @@
-#include <vector>
-#include <fstream>
+#include <bits/stdc++.h>
 #include "var.hpp"
-#include <string>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 
@@ -10,7 +8,7 @@ using namespace std;
 #ifndef MYCONSOLE_
 #define MYCONSOLE_
 
-
+//chuan hoa lai cot va hang
 bool checkROW(int i){
     if (i<0 || i>=ROW) return false;
     for (int j=0; j<COLUMN; j++)
@@ -31,6 +29,7 @@ bool checkLimit(int i, int j){
     return true;
 }
 
+//cap nhat lai mang a
 void update(){
     for (int i=0; i<ROW; i++){
         if (checkROW(i) && checkROW(i+1) && checkROW(i-1)){
@@ -45,8 +44,10 @@ void update(){
 
 }
 
+// tim duong di
 void xuly(){
     if (a[xs][ys]!=a[xf][yf]) return;
+    if (xs==xf && ys==yf) return;
     int tx[] = {-1, 0, 1, 0};
     int ty[] = {0, 1, 0, -1};
     queue <int> x;
@@ -106,6 +107,7 @@ void xuly(){
     }
 }
 
+//doc du lieu
 void readData(){
     ifstream fi("level1.txt");
     a.resize(ROW);
@@ -119,8 +121,8 @@ void readData(){
 
 //tien xu ly
 void tienxuly(int tt, int x, int y){
-    x = (x - pixelStartColumn)/44 + 1;
-    y = (y - pixelStartRow)/46 + 1;
+    x = (x - pixelStartColumn)/42 + 1;
+    y = (y - pixelStartRow)/47 + 1;
     if (tt%2==1){
         xs = y;
         ys = x;
