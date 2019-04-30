@@ -11,6 +11,7 @@ using namespace std;
 // bien thuong
 const int ROW = 11, COLUMN = 18;
 const int pixelStartRow = 100, pixelStartColumn = 230;
+const int TimeLimited = 300;
 vector< vector<int> > a;
 int xs, ys, xf, yf;
 int level_number = 1;
@@ -23,20 +24,55 @@ char chars[]={'0','1','2','3','4','5','6','7','8','9'};
 SDL_Window* window;
 SDL_Renderer* renderer;
 
-SDL_Rect sourceRect[150], sRect_logo, sRect_level, sRect_time, sRect_score;
-SDL_Rect desRect[150], dRect_logo, dRect_level, dRect_time, dRect_score;
-SDL_Rect sRect_number_level, dRect_number_level, sRect_number_score, dRect_number_score, sRect_number_time, dRect_number_time;
+class SDL{
+    SDL_Rect sRect, dRect;
+    SDL_Texture* texture;
 
-SDL_Texture* texture[150];
-SDL_Texture* texture_logo;
-SDL_Texture* texture_level;
-SDL_Texture* texture_score;
-SDL_Texture* texture_time;
-SDL_Texture* texture_number_level;
-SDL_Texture* texture_number_time;
-SDL_Texture* texture_number_score;
+public:
+    void setSRect(int w, int h){
+        sRect.x = sRect.y = 0;
+        sRect.w = w;
+        sRect.h = h;
+    }
 
-SDL_Surface* icon[150];
+    void setDRect(int x, int y, int w, int h){
+        dRect.x = x;
+        dRect.y = y;
+        dRect.w = w;
+        dRect.h = h;
+    }
+
+    void createTextureIMG(string filepath){
+        SDL_Surface* surface = IMG_Load(filepath.c_str());
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+    }
+
+    void createTextureText(string filepath, string c_string, int font_size, SDL_Color color, int x, int y){
+        TTF_Font* font = TTF_OpenFont(filepath.c_str(), font_size);
+        SDL_Surface* surface = TTF_RenderText_Solid(font, c_string.c_str(), color);
+        texture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        int w, h;
+        TTF_SizeText(font, c_string.c_str(), &w, &h);
+        setDRect(x, y, w, h);
+        setSRect(w, h);
+    }
+
+    void renderCopyBackground(){
+        SDL_RenderCopy(renderer, texture, NULL, NULL);
+    }
+
+    void renderCopy(){
+        SDL_RenderCopy(renderer, texture, &sRect, &dRect);
+    }
+};
+
+SDL background;
+SDL icon[150];
+SDL logo, level, _time, score;
+SDL number_level, number_time, number_score;
+
 SDL_Event event;
 
 TTF_Font* font_number = NULL;

@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
         if (event.type == SDL_QUIT) quit = true;
 
         // xu ly click chuot
-        if (event.type == SDL_MOUSEBUTTONDOWN){
+        if (event.type == SDL_MOUSEBUTTONDOWN && time_number>0){
             int x = event.button.x;
             int y = event.button.y;
             tt++;
@@ -43,9 +43,12 @@ int main(int argc, char* argv[])
             //updateScore();
         }
 
-        renderCopy();
-        time_number=180 - (int)(clock()-start_time)/CLOCKS_PER_SEC;
-        //if (time_number<=0) reder_game_over();
+        renderCopyConsole();
+        time_number = TimeLimited - (int)(clock()-start_time)/CLOCKS_PER_SEC;
+        if (time_number<=0) {
+            render_game_over();
+            time_number = 0;
+        }
         updateTime();
         updateScore();
         SDL_RenderPresent(renderer);
