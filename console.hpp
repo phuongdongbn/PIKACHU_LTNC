@@ -53,9 +53,9 @@ void xuly(){
     queue <int> x;
     queue <int> y;
     queue <int> h;
-    int xd[ROW][COLUMN] = {};
-    int l[ROW][COLUMN] = {};
-    xd[xs][ys]=1;
+    int xd[ROW][COLUMN][4] = {};
+    int l[ROW][COLUMN][4] = {};
+    for (int i=0; i<4; i++) xd[xs][ys][i]=1;
     int xx, yy, dx, dy, dh;
     //loang 4 o lan can
     for (int i=0; i<4; i++){
@@ -71,8 +71,8 @@ void xuly(){
             x.push(xx);
             y.push(yy);
             h.push(i);
-            l[xx][yy]=0;
-            xd[xx][yy]=1;
+            l[xx][yy][i]=0;
+            xd[xx][yy][i]=1;
         }
     }
     while (x.size()>0){
@@ -84,32 +84,39 @@ void xuly(){
             yy = dy + ty[i];
             if (checkLimit(xx,yy)){
                 if (a[xx][yy]==0 || (xx==xf && yy ==yf)){
-                    if (xd[xx][yy]==0){
-                        if (i==dh) l[xx][yy]=l[dx][dy];
-                        else l[xx][yy]=l[dx][dy]+1;
-                        xd[xx][yy]=1;
-                        x.push(xx); y.push(yy); h.push(i);
+                    if (xd[xx][yy][i]==0){
+                        if (i==dh) l[xx][yy][i]=l[dx][dy][dh];
+                        else l[xx][yy][i]=l[dx][dy][dh]+1;
+                        xd[xx][yy][i]=1;
+                        x.push(xx); y.push(yy);
+                        h.push(i);
                     } else {
                         if (i==dh){
-                            if (l[xx][yy]>l[dx][dy]) l[xx][yy]=l[dx][dy];
+                            if (l[xx][yy][i]>l[dx][dy][dh]) l[xx][yy][i]=l[dx][dy][dh];
                         } else {
-                            if (l[xx][yy]>l[dx][dy]+1) l[xx][yy]=l[dx][dy]+1;
+                            if (l[xx][yy][i]>l[dx][dy][dh]+1) l[xx][yy][i]=l[dx][dy][dh]+1;
                         }
                     }
                 }
             }
         }
-        if (l[xf][yf]<3 && xd[xf][yf]==1) {
+    }
+    for (int i=0; i<4; i++)
+        if (l[xf][yf][i]<3 && xd[xf][yf][i]==1) {
             a[xf][yf]=0;
             a[xs][ys]=0;
             update();
+            return;
         }
-    }
 }
 
 //doc du lieu
 void readData(){
-    ifstream fi("level1.txt");
+    int x = rand()%5;
+    string filepath_level = "bando/level";
+    filepath_level+=chars[x];
+    filepath_level+=".txt";
+    ifstream fi("bando/level1.txt");
     a.resize(ROW);
     for (int i=0; i<ROW; i++){
         a[i].resize(COLUMN);

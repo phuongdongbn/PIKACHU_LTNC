@@ -36,7 +36,7 @@ void khoitao(){
      for (int i=1; i<=(ROW-2)*(COLUMN-2); i++){
         int x = (i-1)/(COLUMN-2)+1;
         int y = i-(x-1)*(COLUMN-2);
-        if (a[x][y]!=0){
+        if (a[x][y]>0){
             itos(a[x][y],s);
             s="image/icon/"+s+".jpg";
             icon[i].createTextureIMG(s.c_str());
@@ -93,7 +93,7 @@ void renderCopyConsole(){
     for (int i=1; i<=(ROW-2)*(COLUMN-2); i++){
         int x = (i-1)/(COLUMN-2)+1;
         int y = i-(x-1)*(COLUMN-2);
-        if (a[x][y]!=0) icon[i].renderCopy();
+        if (a[x][y]>0) icon[i].renderCopy();
             //SDL_DestroyTexture(texture[i]);
     }
     number_level.renderCopy();
@@ -116,5 +116,24 @@ void render_game_over(){
 
     //SDL text_replay;
     //SDL_Color color2 = {}
+}
+
+void levelUp(){
+   // SDL_RenderClear(renderer);
+    SDL level_up;
+    bool up = false;
+    while (!up){
+        if ( SDL_WaitEvent(&event) == 0) continue;
+        if (event.type == SDL_MOUSEBUTTONDOWN){
+            if (event.button.x == 0 && event.button.y == 0) up=true;
+        }
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_Color color1 = {255, 0, 0};
+        level_up.createTextureText("font/Gameover.ttf", "Congratulation!!!", 70, color1, 315, 220);
+        level_up.renderCopy();
+    }
+    level_number++;
+    readData();
 }
 #endif // MYCONSOLESDL_

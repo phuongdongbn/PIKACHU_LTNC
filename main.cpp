@@ -51,6 +51,18 @@ int main(int argc, char* argv[])
         }
         updateTime();
         updateScore();
+
+        if (score_number%2880==0){
+            bool xd=true;
+            for (int i=0; i<ROW; i++){
+                if (!checkROW(i)) {
+                    xd=false;
+                    break;
+                }
+            }
+            if (xd) levelUp();
+        }
+
         SDL_RenderPresent(renderer);
     }
 

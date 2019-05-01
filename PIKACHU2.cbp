@@ -35,9 +35,12 @@
 		<Linker>
 			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf" />
 		</Linker>
+		<Unit filename="bando/level2.txt" />
+		<Unit filename="bando/level3.txt" />
+		<Unit filename="bando/level4.txt" />
+		<Unit filename="bando/level5.txt" />
 		<Unit filename="console.hpp" />
 		<Unit filename="console_sdl.hpp" />
-		<Unit filename="level1.txt" />
 		<Unit filename="main.cpp" />
 		<Unit filename="var.hpp" />
 		<Extensions>
