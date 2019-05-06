@@ -16,7 +16,7 @@ vector< vector<int> > a;
 int xs, ys, xf, yf;
 int level_number = 1;
 int score_number = 0;
-int time_number = 180;
+int time_number = 0;
 char chars[]={'0','1','2','3','4','5','6','7','8','9'};
 
 //Cac bien SDL

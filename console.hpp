@@ -112,11 +112,12 @@ void xuly(){
 
 //doc du lieu
 void readData(){
+    srand(0);
     int x = rand()%5;
     string filepath_level = "bando/level";
     filepath_level+=chars[x];
     filepath_level+=".txt";
-    ifstream fi("bando/level1.txt");
+    ifstream fi(filepath_level.c_str());
     a.resize(ROW);
     for (int i=0; i<ROW; i++){
         a[i].resize(COLUMN);
@@ -130,6 +131,7 @@ void readData(){
 void tienxuly(int tt, int x, int y){
     x = (x - pixelStartColumn)/42 + 1;
     y = (y - pixelStartRow)/47 + 1;
+
     if (tt%2==1){
         xs = y;
         ys = x;
@@ -146,6 +148,16 @@ void itos(int x, string &s){
     while (x>0){
         s=chars[x%10]+s;
         x/=10;
+    }
+}
+
+void caculateScore(){
+    score_number=0;
+    for (int i=1; i<=(ROW-2)*(COLUMN-2); i++){
+        int x = (i-1)/(COLUMN-2)+1;
+        int y = i-(x-1)*(COLUMN-2);
+        if (a[x][y]<=0) score_number+=10;
+            //SDL_DestroyTexture(texture[i]);
     }
 }
 #endif // MYCONSOLE_
