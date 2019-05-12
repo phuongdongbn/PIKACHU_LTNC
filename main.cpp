@@ -50,6 +50,13 @@ int main(int argc, char* argv[])
         // Thoat
         if (event.type == SDL_QUIT) quit = true;
 
+        // win
+        if (level_number>5){
+            renderWin();
+            SDL_RenderPresent(renderer);
+            continue;
+        }
+
         // xu ly click chuot
         if (event.type == SDL_MOUSEBUTTONDOWN && time_number>0 && !level_check){
             int x = event.button.x;
@@ -64,11 +71,12 @@ int main(int argc, char* argv[])
                 } else choose = false;
             //updateScore();
             } else {
-                if (x>=800 && x<=845 && y>=32 && y<=68) {
+                if (x>=780 && x<=825 && y>=32 && y<=68) {
                     ttSound++;
                     onOffSound(ttSound);
                 }
-                if (x>=850 && x<=895 && y>=27 && y<=73) {
+                if (x>=850 && x<=895 && y>=27 && y<=73 && rev_number>0) {
+                    rev_number--;
                     reverseMap();
                     khoitao();
                 }
@@ -88,8 +96,9 @@ int main(int argc, char* argv[])
         renderReverse();
         if (choose) renderChooseRect(xx,yy);
         renderSound(ttSound);
-        if (score_number%1440==0 && score_number>0) level_check=true;
+        if (score_number==1440*level_number) level_check=true;
         if (level_check) {
+            rev_number = rev_number+ (time_number-1)/120 +1;
             readData();
             level_number++;
             khoitao();

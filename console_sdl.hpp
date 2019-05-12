@@ -60,13 +60,21 @@ void renderReverse(){
     rev.setDRect(850,27,45,46);
     rev.setSRect(45, 46);
     rev.renderCopy();
+
+    SDL number_rev;
+    string rev_string;
+    itos(rev_number, rev_string);
+    if (rev_number==0) rev_string="0";
+    SDL_Color fg = {255, 102, 0};
+    number_rev.createTextureText("font/X-Files.ttf", rev_string, 50, fg, 900, 30);
+    number_rev.renderCopy();
 }
 
 void renderSound(int tt){
     SDL sound;
     if (tt%2==0) sound.createTextureIMG("image/image/sound.jpg");
     else sound.createTextureIMG("image/image/non-sound.jpg");
-    sound.setDRect(800,27,45,46);
+    sound.setDRect(780,27,45,46);
     sound.setSRect(45, 46);
     sound.renderCopy();
 }
@@ -128,6 +136,19 @@ void render_game_over(){
     //SDL text_replay;
     //SDL_Color color2 = {}
 }
+
+void renderWin(){
+
+    SDL textWin;
+    SDL_Color color = {255, 0, 0};
+
+    textWin.createTextureText("font/Gameover.ttf", "YOU WIN! ", 70, color, 315, 250);
+    textWin.renderCopy();
+
+    //SDL text_replay;
+    //SDL_Color color2 = {}
+}
+
 
 void onOffSound(int tt){
     if (tt%2==1) Mix_PauseMusic();

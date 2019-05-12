@@ -18,6 +18,7 @@ int xs, ys, xf, yf;
 int level_number = 1;
 int score_number = 0;
 int time_number = 0;
+int rev_number = 10;
 char chars[]={'0','1','2','3','4','5','6','7','8','9'};
 
 //Cac bien SDL
@@ -31,6 +32,7 @@ class SDL{
     SDL_Texture* texture;
 
 public:
+
     void setSRect(int w, int h){
         sRect.x = sRect.y = 0;
         sRect.w = w;

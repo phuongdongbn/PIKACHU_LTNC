@@ -17,22 +17,66 @@ bool checkLimit(int i, int j){
     return true;
 }
 
+// chuyen so sang xau
+void itos(int x, string &s){
+    s="";
+    while (x>0){
+        s=chars[x%10]+s;
+        x/=10;
+    }
+}
+
+void khoiTaoLaiCot(int y){
+    string s;
+    for (int i=1; i<ROW-1; i++){
+            int vt = (i-1)*(COLUMN-2)+y;
+            if (a[i][y]>0){
+                itos(a[i][y],s);
+                s="image/icon/"+s+".jpg";
+                icon[vt].createTextureIMG(s.c_str());
+                icon[vt].setSRect(40, 45);
+                icon[vt].setDRect(pixelStartColumn + (y-1)*42, pixelStartRow + (i-1)*47, 40, 45);
+            }
+    }
+}
+
+void khoiTaoLaiHang(int x){
+    string s;
+    for (int i=1; i<COLUMN-1; i++){
+            int vt = (x-1)*(COLUMN-2)+i;
+            if (a[x][i]>0){
+                itos(a[x][i],s);
+                s="image/icon/"+s+".jpg";
+                icon[vt].createTextureIMG(s.c_str());
+                icon[vt].setSRect(40, 45);
+                icon[vt].setDRect(pixelStartColumn + (i-1)*42, pixelStartRow + (x-1)*47, 40, 45);
+            }
+    }
+}
+
+
 // xuly di chuyen ban do
 void update(int x, int y){
     if (level_number==1) return;
     int tg;
-    switch(level_number){
-        case 2:
-            tg = a[ROW-2][y];
-            for (int i=ROW-2; i>1; i--) a[i][y]=a[i-1][y];
-            a[1][y]=tg;
-            break;
-        case 3:
-            tg = a[x][COLUMN-2];
-            for (int i=COLUMN-2; i>1; i--) a[x][i]=a[x][i-1];
-            a[x][1]=tg;
-        case 4:
-            for (int i=ROW-3; i>0; i--)
+    string s;
+    if (level_number==2){
+        tg = a[ROW-2][y];
+        for (int i=ROW-2; i>1; i--) a[i][y]=a[i-1][y];
+        a[1][y]=tg;
+        khoiTaoLaiCot(y);
+        return;
+    }
+    if (level_number==3){
+        tg = a[x][COLUMN-2];
+        for (int i=COLUMN-2; i>1; i--) a[x][i]=a[x][i-1];
+        a[x][1]=tg;
+        khoiTaoLaiHang(x);
+        return;
+    }
+
+    if (level_number==4){
+        for (int i=ROW-3; i>0; i--)
                 if (a[i][y]>0){
                     int j=i+1;
                     while (a[j][y]==0 && j<ROW-1){
@@ -40,9 +84,12 @@ void update(int x, int y){
                         j++;
                     }
                 }
-            break;
-        case 5:
-            for (int i=COLUMN-3; i>0; i--)
+        khoiTaoLaiCot(y);
+        return;
+    }
+
+    if (level_number==5){
+        for (int i=COLUMN-3; i>0; i--)
                 if (a[x][i]>0){
                     int j=i+1;
                     while (a[x][j]==0 && j<COLUMN-1){
@@ -50,7 +97,8 @@ void update(int x, int y){
                         j++;
                     }
                 }
-            break;
+        khoiTaoLaiHang(x);
+        return;
     }
 }
 
@@ -165,15 +213,6 @@ void tienxuly(int tt, int x, int y){
         xf = y;
         yf = x;
         xuly();
-    }
-}
-
-// chuyen so sang xau
-void itos(int x, string &s){
-    s="";
-    while (x>0){
-        s=chars[x%10]+s;
-        x/=10;
     }
 }
 

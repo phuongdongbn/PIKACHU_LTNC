@@ -1,0 +1,31 @@
+ CÀI ĐẶT SDL CHO CODEBLOCKS
+
+	1. Vào trang  http://www.msys2.org/ download phiên bản 64-bit msys2-x86_64-20161025.exe rồi install.
+	
+	2. Chọn Start Menu -> MSYS2 64-bit -> MSYS2 MSYS. Chạy lệnh pacman -Syu để update msys, đợi cho đến khi update xong thì tắt cửa sổ.
+	
+	3. Chọn Start Menu -> MSYS2 64-bit -> MSYS2 MSYS. Chạy tiếp câu lệnh pacman -S make tar mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb để install thêm bản gcc mới nhất.
+	Chạy tiếp câu lệnh pacman -Ss x86_64-sdl2, sau khi chạy xong, install hết các thư viện vào bằng cách gõ câu lệnh: 
+	pacman -S mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_gfx mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2_mixer mingw-w64-x86_64-SDL2_net mingw-w64-x86_64-SDL2_ttf.
+	Xong xuôi tắt cửa sổ đi.
+	
+	4. Tiếp tục chọn Start Menu -> MSYS2 64-bit -> MSYS2 MinGW 64-bit, gõ lần lượt các câu lệnh g++ --version, which sdl2.dll, make --version để xác nhận đã install thành công.
+	
+	5. Mở Codeblocks lên, Chọn Setting -> Compiler. Chọn Copy rồi rename compiler thành tên khác (VD: MSYS2 MinGW 64-bit). Gõ đúng thư mục đường dẫn tới thư mục mingw64(install ở bước 1)
+	
+	6. Chọn các program files bên dưới như sau:
+		- C compiler: gcc.exe
+		- C++ compiler: g++.exe
+		- Linker for dynamic libs: g++.exe
+		- Linker for static libs: ar.ext
+		- Debugger: Invalid debugger
+		- Resource compiler: windres.exe
+		- Make program: mingw32-make.exe
+		
+	7. Mở Project ra, chọn Project -> Build options...:
+		- Mục selected compiler chọn đúng compiler đã đặt tên ở bước 5.
+		- Chọn linker settings, copy dòng -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer vào mục Other linker options.
+		
+	8. Build project và chạy thử.
+	
+** Link GitHub project: https://github.com/phuongdongbn/PIKACHU_LTNC
