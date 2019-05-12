@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1557132075 source:c:\users\admin\desktop\tailieu\dong\pikachu2\main.cpp
+1557653209 source:c:\users\admin\desktop\tailieu\dong\pikachu2\main.cpp
 	<bits/stdc++.h>
 	"console.hpp"
 	"console_sdl.hpp"
@@ -7,23 +7,27 @@
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
 
-1557132143 c:\users\admin\desktop\tailieu\dong\pikachu2\console.hpp
+1557657010 c:\users\admin\desktop\tailieu\dong\pikachu2\console.hpp
 	<bits/stdc++.h>
 	"var.hpp"
 	<SDL2/SDL_image.h>
 	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
 
-1557072574 c:\users\admin\desktop\tailieu\dong\pikachu2\var.hpp
+1557593925 c:\users\admin\desktop\tailieu\dong\pikachu2\var.hpp
 	<vector>
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
 
-1557073278 c:\users\admin\desktop\tailieu\dong\pikachu2\console_sdl.hpp
+1557653229 c:\users\admin\desktop\tailieu\dong\pikachu2\console_sdl.hpp
 	<bits/stdc++.h>
 	"var.hpp"
 	<SDL2/SDL.h>
 	<SDL2/SDL_image.h>
 	<SDL2/SDL_ttf.h>
+	<SDL2/SDL_mixer.h>
 

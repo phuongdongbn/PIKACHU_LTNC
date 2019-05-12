@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 using namespace std;
 
@@ -11,7 +12,7 @@ using namespace std;
 // bien thuong
 const int ROW = 11, COLUMN = 18;
 const int pixelStartRow = 100, pixelStartColumn = 230;
-const int TimeLimited = 300;
+const int TimeLimited = 600;
 vector< vector<int> > a;
 int xs, ys, xf, yf;
 int level_number = 1;
@@ -23,6 +24,7 @@ char chars[]={'0','1','2','3','4','5','6','7','8','9'};
 
 SDL_Window* window;
 SDL_Renderer* renderer;
+Mix_Music* music;
 
 class SDL{
     SDL_Rect sRect, dRect;

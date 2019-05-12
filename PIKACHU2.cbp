@@ -33,7 +33,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Linker>
-			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf" />
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer" />
 		</Linker>
 		<Unit filename="bando/level2.txt" />
 		<Unit filename="bando/level3.txt" />

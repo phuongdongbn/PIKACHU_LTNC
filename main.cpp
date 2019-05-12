@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 using namespace std;
 
@@ -21,14 +22,28 @@ int main(int argc, char* argv[])
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     khoitao();
 
+    //tao nhac nen
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+	{
+		printf("%s", Mix_GetError());
+		return -1;
+	}
+	//chunk = Mix_LoadWAV("sound_effects.wav");
+    music = Mix_LoadMUS("mp3/Hope_You.mp3");
+    Mix_PlayMusic(music,-1);
+
     bool quit = false;
     bool level_check = false;
+    bool choose = false;
     int tt=0;
+    int ttSound=0;
+    int xx,yy;
 
     // show
     clock_t start_time = clock();
     while (!quit)
     {
+        SDL_RenderClear(renderer);
         //doi event
         if ( SDL_WaitEvent(&event) == 0) continue;
 
@@ -39,9 +54,25 @@ int main(int argc, char* argv[])
         if (event.type == SDL_MOUSEBUTTONDOWN && time_number>0 && !level_check){
             int x = event.button.x;
             int y = event.button.y;
-            tt++;
-            tienxuly(tt,x,y);
+            if (x>=pixelStartColumn && y>=pixelStartRow){
+                tt++;
+                tienxuly(tt,x,y);
+                if (tt%2==1){
+                    choose = true;
+                    xx = x;
+                    yy = y;
+                } else choose = false;
             //updateScore();
+            } else {
+                if (x>=800 && x<=845 && y>=32 && y<=68) {
+                    ttSound++;
+                    onOffSound(ttSound);
+                }
+                if (x>=850 && x<=895 && y>=27 && y<=73) {
+                    reverseMap();
+                    khoitao();
+                }
+            }
         }
         caculateScore();
         if (!level_check) {
@@ -54,6 +85,9 @@ int main(int argc, char* argv[])
             updateTime();
             updateScore();
         }
+        renderReverse();
+        if (choose) renderChooseRect(xx,yy);
+        renderSound(ttSound);
         if (score_number%1440==0 && score_number>0) level_check=true;
         if (level_check) {
             readData();

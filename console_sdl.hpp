@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 using namespace std;
 
@@ -51,6 +52,23 @@ void khoitao(){
     string level_string;
     itos(level_number, level_string);
     number_level.createTextureText("font/X-Files.ttf", level_string, 30, fg, 110, 160);
+}
+
+void renderReverse(){
+    SDL rev;
+    rev.createTextureIMG("image/image/chuyen-ban-do.jpg");
+    rev.setDRect(850,27,45,46);
+    rev.setSRect(45, 46);
+    rev.renderCopy();
+}
+
+void renderSound(int tt){
+    SDL sound;
+    if (tt%2==0) sound.createTextureIMG("image/image/sound.jpg");
+    else sound.createTextureIMG("image/image/non-sound.jpg");
+    sound.setDRect(800,27,45,46);
+    sound.setSRect(45, 46);
+    sound.renderCopy();
 }
 
 void updateScore(){
@@ -110,4 +128,23 @@ void render_game_over(){
     //SDL text_replay;
     //SDL_Color color2 = {}
 }
+
+void onOffSound(int tt){
+    if (tt%2==1) Mix_PauseMusic();
+    else Mix_ResumeMusic();
+}
+
+void renderChooseRect(int x, int y){
+    x = (x - pixelStartColumn)/42 + 1;
+    y = (y - pixelStartRow)/47 + 1;
+
+    SDL_Rect chooseRect;
+    chooseRect.x = pixelStartColumn + (x-1)*42 -2;
+    chooseRect.y = pixelStartRow + (y-1)*47 -2;
+    chooseRect.w = 44;
+    chooseRect.h = 49;
+
+    SDL_RenderDrawRect(renderer, &chooseRect);
+}
+
 #endif // MYCONSOLESDL_

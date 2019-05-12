@@ -2,6 +2,7 @@
 #include "var.hpp"
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
 using namespace std;
 
@@ -9,19 +10,6 @@ using namespace std;
 #define MYCONSOLE_
 
 //chuan hoa lai cot va hang
-bool checkROW(int i){
-    if (i<0 || i>=ROW) return false;
-    for (int j=0; j<COLUMN; j++)
-        if (a[i][j]>0) return false;
-    return true;
-}
-
-bool checkCOLUMN(int i){
-    if (i<0 || i>=COLUMN) return false;
-    for (int j=0; j<ROW; j++)
-        if (a[j][i]>0) return false;
-    return true;
-}
 
 bool checkLimit(int i, int j){
     if (i<0 || i>=ROW) return false;
@@ -29,19 +17,41 @@ bool checkLimit(int i, int j){
     return true;
 }
 
-//cap nhat lai mang a
-void update(){
-    for (int i=0; i<ROW; i++){
-        if (checkROW(i) && checkROW(i+1) && checkROW(i-1)){
-            for (int j=0; j<COLUMN; j++) a[i][j]=-1;
-        }
+// xuly di chuyen ban do
+void update(int x, int y){
+    if (level_number==1) return;
+    int tg;
+    switch(level_number){
+        case 2:
+            tg = a[ROW-2][y];
+            for (int i=ROW-2; i>1; i--) a[i][y]=a[i-1][y];
+            a[1][y]=tg;
+            break;
+        case 3:
+            tg = a[x][COLUMN-2];
+            for (int i=COLUMN-2; i>1; i--) a[x][i]=a[x][i-1];
+            a[x][1]=tg;
+        case 4:
+            for (int i=ROW-3; i>0; i--)
+                if (a[i][y]>0){
+                    int j=i+1;
+                    while (a[j][y]==0 && j<ROW-1){
+                        swap(a[j-1][y],a[j][y]);
+                        j++;
+                    }
+                }
+            break;
+        case 5:
+            for (int i=COLUMN-3; i>0; i--)
+                if (a[x][i]>0){
+                    int j=i+1;
+                    while (a[x][j]==0 && j<COLUMN-1){
+                        swap(a[x][j-1],a[x][j]);
+                        j++;
+                    }
+                }
+            break;
     }
-    for (int i=0; i<COLUMN; i++){
-        if (checkCOLUMN(i) && checkCOLUMN(i+1) && checkCOLUMN(i-1)){
-            for (int j=0; j<ROW; j++) a[j][i]=-1;
-        }
-    }
-
 }
 
 // tim duong di
@@ -64,7 +74,8 @@ void xuly(){
         if (xx==xf && yy==yf){
             a[xs][ys]=0;
             a[xf][yf]=0;
-            update();
+            update(xs,ys);
+            update(xf,yf);
             return;
         }
         else if (checkLimit(xx,yy) && a[xx][yy]==0){
@@ -105,15 +116,16 @@ void xuly(){
         if (l[xf][yf][i]<3 && xd[xf][yf][i]==1) {
             a[xf][yf]=0;
             a[xs][ys]=0;
-            update();
+            update(xs,ys);
+            update(xf,yf);
             return;
         }
 }
 
 //doc du lieu
 void readData(){
-    srand(0);
-    int x = rand()%5;
+    srand(time(0));
+    int x = rand()%9 +1;
     string filepath_level = "bando/level";
     filepath_level+=chars[x];
     filepath_level+=".txt";
@@ -124,6 +136,20 @@ void readData(){
         for (int j=0; j<COLUMN; j++){
             fi >> a[i][j];
         }
+    }
+}
+
+void reverseMap(){
+    srand(time(0));
+    int x,y,dx,dy;
+    for (int t=0; t<20; t++){
+        do {
+            x = rand()%(ROW-2) +1;
+            y = rand()%(COLUMN-2) +1;
+            dx = rand()%(ROW-2) +1;
+            dy = rand()%(COLUMN-2) +1;
+        } while (a[x][y]<=0 || a[dx][dy]<=0);
+        swap(a[x][y], a[dx][dy]);
     }
 }
 
@@ -152,7 +178,7 @@ void itos(int x, string &s){
 }
 
 void caculateScore(){
-    score_number=0;
+    score_number=(level_number-1)*1440;
     for (int i=1; i<=(ROW-2)*(COLUMN-2); i++){
         int x = (i-1)/(COLUMN-2)+1;
         int y = i-(x-1)*(COLUMN-2);
