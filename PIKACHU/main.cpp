@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "console.hpp"
-#include "console_sdl.hpp"
+#include "sdl.hpp"
 #include "var.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
