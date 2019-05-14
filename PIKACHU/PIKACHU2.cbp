@@ -40,8 +40,8 @@
 		<Unit filename="bando/level4.txt" />
 		<Unit filename="bando/level5.txt" />
 		<Unit filename="console.hpp" />
-		<Unit filename="console_sdl.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="sdl.hpp" />
 		<Unit filename="var.hpp" />
 		<Extensions>
 			<code_completion />

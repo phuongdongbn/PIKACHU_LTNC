@@ -177,6 +177,7 @@ void readData(){
     string filepath_level = "bando/level";
     filepath_level+=chars[x];
     filepath_level+=".txt";
+    if (level_number==1) filepath_level = "bando/level10.txt";
     ifstream fi(filepath_level.c_str());
     a.resize(ROW);
     for (int i=0; i<ROW; i++){
@@ -223,6 +224,32 @@ void caculateScore(){
         int y = i-(x-1)*(COLUMN-2);
         if (a[x][y]<=0) score_number+=10;
             //SDL_DestroyTexture(texture[i]);
+    }
+}
+
+void readNameAndScore(){
+    ifstream fi("data.txt");
+    fi >> count_players;
+    list_name.resize(count_players);
+    list_score.resize(count_players);
+    for (int i=0; i<count_players; i++){
+        fi >> list_name[i] >> list_score[i];
+    }
+}
+
+void writeNameAndScore(){
+    for (int i=0; i<count_players; i++){
+        for (int j=i+1; j<count_players; j++){
+            if (list_score[i]<list_score[j]){
+                swap(list_score[i],list_score[j]);
+                swap(list_name[i],list_name[j]);
+            }
+        }
+    }
+    ofstream fo("data.txt");
+    fo << count_players << endl;
+    for (int i=0; i<count_players; i++){
+        fo << list_name[i] << " " << list_score[i] << endl;
     }
 }
 #endif // MYCONSOLE_

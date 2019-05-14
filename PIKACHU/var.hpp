@@ -20,6 +20,12 @@ int score_number = 0;
 int time_number = 0;
 int rev_number = 10;
 char chars[]={'0','1','2','3','4','5','6','7','8','9'};
+vector <string> list_name;
+vector <int> list_score;
+int count_players;
+string name = "";
+bool again = false;
+int vt;
 
 //Cac bien SDL
 
